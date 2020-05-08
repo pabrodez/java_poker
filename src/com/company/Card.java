@@ -3,10 +3,12 @@ package com.company;
 public class Card {
   private String value;
   private String suit;
+  private int order;
 
-  public Card(String value, String suit) {
+  public Card(String value, String suit, int order) {
     this.value = value;
     this.suit = suit;
+    this.order = order;
   }
 
   public String getValue() {
@@ -21,6 +23,13 @@ public class Card {
   }
   public void setSuit(String suit) {
     this.suit = suit;
+  }
+
+  public int getOrder() {
+    return order;
+  }
+  public void setOrder(int order) {
+    this.order = order;
   }
 
   public String toString() {

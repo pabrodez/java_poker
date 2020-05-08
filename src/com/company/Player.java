@@ -59,7 +59,6 @@ public class Player {
 
   public String toString() {
     return("Player name: " + getName() + "\n" +
-           "hand: " + printHand() + "\n" +
            "blind: " + getBlind() + "\n" +
            "chips: " + getChips() + "\n" +
            "wins: " + getWins()
