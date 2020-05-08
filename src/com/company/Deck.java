@@ -1,11 +1,11 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.lang.Math;
 
 public class Deck {
   private static final int SIZE = 52;
-
   private static final String TWO = "2";
   private static final String THREE = "3";
   private static final String FOUR = "4";
@@ -25,8 +25,7 @@ public class Deck {
   private static final String DIAMONDS = "d";
   private static final String CLUBS = "c";
 
-  // TODO: change STANDARD_DECK to ArrayList type
-  private static final Card[] STANDARD_DECK = {
+  private static final ArrayList<Card> STANDARD_DECK = new ArrayList<>(Arrays.asList(
           new Card(TWO, SPADES, 1),
           new Card(THREE, SPADES, 2),
           new Card(FOUR, SPADES, 3),
@@ -81,38 +80,39 @@ public class Deck {
           new Card(JACK, CLUBS,10),
           new Card(QUEEN, CLUBS,11),
           new Card(KING, CLUBS,12),
-          new Card(ACE, CLUBS,13),
-  };
+          new Card(ACE, CLUBS,13)
+  ));
 
-  private Card[] playDeck;
+  private ArrayList<Card> playDeck;
 
   public Deck() {
-    this.playDeck = new Card[SIZE];
+    this.playDeck = shuffleStandardDeck();
   }
 
-  public Card[] getPlayDeck() {
+  public ArrayList<Card> getPlayDeck() {
     return this.playDeck;
   }
 
-  public void setPlayDeck() {
+  public void newPlayDeck() {
     this.playDeck = shuffleStandardDeck();
   }
 
   public Card drawCard(int ind) {
-    // TODO: drawCard() returns card and removes it from playDeck
-    Card outCard = playDeck[ind];
+    Card drawnCard = playDeck.get(ind);
+    playDeck.remove(ind);
+    return drawnCard;
   }
 
-  public Card[] shuffleStandardDeck() {
-    Card[] newDeck = new Card[SIZE];
+  public ArrayList<Card> shuffleStandardDeck() {
+    ArrayList<Card> newDeck = new ArrayList<>();
     ArrayList<String> usedCards = new ArrayList<>();
-    for (int i = 0; i < newDeck.length; i++) {
+    for (int i = 0; SIZE > i; i++) {
       boolean isUsed = true;
       while (isUsed) {
-        int random = (int) (Math.random() * SIZE);
-        String pickedCard = STANDARD_DECK[random].toString();
+        int random = (int)(Math.random() * SIZE);
+        String pickedCard = STANDARD_DECK.get(random).toString();
         if (!usedCards.contains(pickedCard)) {
-          newDeck[i] = STANDARD_DECK[random];
+          newDeck.add(STANDARD_DECK.get(random));
           usedCards.add(pickedCard);
           isUsed = false;
         }
