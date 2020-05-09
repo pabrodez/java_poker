@@ -28,14 +28,29 @@ public class Main {
 //        }
 
         // TODO: start Game(Player[] players)
-        playersArray = new Player()
+        playersArray[0] = new Player("aa", "bb", 44);
+        playersArray[1] = new Player("bb", "sb", 100);
         Game newGame = new Game(playersArray);
         newGame.giveCards();
         System.out.println(playersArray[0].printHand() + "\n" +
                 playersArray[1].printHand()
         );
-        System.out.println(newGame.getHighCard(playersArray[0].getHand())[0].toString() + "\n" +
+        System.out.println(newGame.getHighCard(
+                playersArray[0].getHand())[0].toString() + "\n" +
                 newGame.getHighCard(playersArray[1].getHand())[0].toString()
+        );
+        System.out.println(
+                newGame.hasPair(playersArray[0].getHand()) + "\n" +
+                newGame.hasPair(playersArray[1].getHand())
+        );
+        System.out.println(
+                newGame.hasFlush(new Card[]{
+                        new Card("2", "s", 1),
+                        new Card("3", "s", 2),
+                        new Card("4", "s", 1),
+                        new Card("2", "s", 1),
+                        new Card("2", "s", 1)}) + "\n" +
+                        newGame.hasThree(playersArray[1].getHand())
         );
 
 
