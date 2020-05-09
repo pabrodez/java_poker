@@ -13,6 +13,8 @@ public class Game {
     theDeck = new Deck();
   }
 
+  // TODO: start Game(Player[] players).round()
+
   public void giveCards() {
     for (Player player : playersArray) {
       Card[] cardsOut = new Card[HAND_SIZE];
@@ -21,10 +23,12 @@ public class Game {
       }
       player.setHand(cardsOut);
     }
+    // TODO: include reshuffle standard deck here?
+    theDeck.newPlayDeck();
   }
 
   public Card[] getHighCard(Card[] hand) {
-    // TODO: implement Stream.reduce()
+
     Card[] highestCard = new Card[1];
     highestCard[0] = hand[0];
     for (Card card : hand) {
@@ -50,20 +54,20 @@ public class Game {
   public boolean hasThree(Card[] hand) {
     int out = 0;
     for (int i = 0; i < hand.length; i++) {
-      int occurrences = 1;
+      int repetitions = 0;
       for (int j = 0; j < hand.length; j++) {
         if (i != j && (hand[i].getOrder() == hand[j].getOrder())) {
-          occurrences++;
+          repetitions++;
         }
       }
-      if (occurrences >= 3) {
-        out = occurrences;
+      if (repetitions == 2) {
+        out = repetitions;
         break;
       }
 
     }
 
-    return out >= 3;
+    return out == 3;
   }
 
   public boolean hasQuads(Card[] hand) {
@@ -94,28 +98,88 @@ public class Game {
   }
 
   public boolean hasStraight(Card[] hand) {
-    ArrayList<Card> handOrders = new ArrayList<>();
-    for (Card card : hand) {
-      handOrders
+    int[] handOrders = new int[5];
+    boolean hasDeuce = false;
+    boolean hasAce = false;
+    // ad hoc logic to check straight starting from Ace
+    for (int i=0; i < hand.length; i++) {
+      handOrders[i] = hand[i].getOrder();
+      if (hand[i].getOrder() == 2) hasDeuce = true;
+      if (hand[i].getOrder() == 13) hasAce = true;
     }
+    // reassign Ace value to 0 to make it be the first in order
+    if (hasAce && hasDeuce) handOrders[4] = 0;
+    Arrays.sort(handOrders);
+    int nOrdered = 0;
+    for (int i = 0; i < handOrders.length - 1; i++) {
+      if (handOrders[i] + 1 == handOrders[i + 1]) nOrdered++;
+    }
+    return nOrdered == 4;
   }
 
-//  public Card[] getHighestPair(Card[] hand) {
-//
-//    for (int i = 0; i < hand.length-1; i++) {
-//      for (int j = i+1; j < hand.length-1; j++) {
-//        if (hand[i].getOrder() == hand[j].getOrder()) {
-//         if (hand[i].getOrder() > highestPair[0].getOrder()) {
-//           highestPair[0] = hand[i];
-//           highestPair[1] = hand[j];
-//
-//           break;
-//         }
-//        }
-//      }
-//    }
-//
-//    return highestPair;
-//  }
+  public boolean hasStraightFlush(Card[] hand) {
+    return (hasFlush(hand) && hasStraight(hand));
+  }
 
+  public boolean hasTwoPair(Card[] hand) {
+    int nPairs = 0;
+    int lastPairOrder = 0;
+    for (int i = 0; i < hand.length; i++) {
+      int repetitions = 0;
+
+      for (int j = 0; j < hand.length; j++) {
+        if ((i != j) && (hand[i].getOrder() == hand[j].getOrder())) {
+          repetitions++;
+        }
+      }
+
+      if (repetitions == 1 && (hand[i].getOrder() != lastPairOrder)) {
+        nPairs++;
+        lastPairOrder = hand[i].getOrder();
+      }
+    }
+
+    return nPairs == 2;
+  }
+
+  public boolean hasFullHouse(Card[] hand) {
+    // 3 occurrences of card rank
+    boolean threeOccur = false;
+    int threeRank = 0;
+    // 2 occurrences of card rank, different to the 3 occurrences rank
+    boolean twoOccur = false;
+
+    // check 3 occur
+    for (int i = 0; i < hand.length; i++) {
+      int nOccur = 0;
+      for (int j = 0; j < hand.length; j++) {
+        if (i != j && hand[i].getOrder() == hand[j].getOrder()) {
+          nOccur++;
+          threeRank = hand[i].getOrder();
+        }
+      }
+      if (nOccur == 2) {
+        threeOccur = true;
+        break;
+      }
+    }
+    // check 2 occur
+    for (int i = 0; i < hand.length; i++) {
+      int nOccur = 0;
+      for (int j = 0; j < hand.length; j++) {
+        if (i != j
+                && hand[i].getOrder() == hand[j].getOrder()
+                && hand[i].getOrder() != threeRank
+                && nOccur < 2) {
+          nOccur++;
+        }
+      }
+      if (nOccur == 1) {
+        twoOccur = true;
+        break;
+      }
+    }
+
+    return threeOccur && twoOccur;
+  }
 }

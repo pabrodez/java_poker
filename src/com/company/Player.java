@@ -9,6 +9,7 @@ public class Player {
   private String blind;
   private int chips;
   private int wins = 0;
+  private int handScore = 0;
 
   public Player(String name, String blind, int chips) {
     this.name = name;
@@ -55,6 +56,13 @@ public class Player {
     StringBuilder out = new StringBuilder();
     for (Card card : this.hand) { out.append(card.toString());}
     return out.toString();
+  }
+
+  public int getHandScore() {
+    return handScore;
+  }
+  public void setHandScore(int handScore) {
+    this.handScore = handScore;
   }
 
   public String toString() {
