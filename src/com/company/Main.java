@@ -44,7 +44,7 @@ public class Main {
         System.out.println(newGame.findHandScore(playersArray[0]));
         System.out.println(newGame.findHandScore(playersArray[1]));
         System.out.println(newGame.findHighestScore(playersArray));
-        System.out.println(newGame.findWinner(playersArray));
+        System.out.println(newGame.getWinner(playersArray));
 
     }
 }

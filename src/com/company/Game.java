@@ -1,6 +1,7 @@
 package com.company;
 
 import java.util.*;
+import java.util.stream.Stream;
 import java.lang.StringBuilder;
 
 public class Game {
@@ -21,31 +22,45 @@ public class Game {
       for (int i=0; i < HAND_SIZE; i++) {
         cardsOut[i] = theDeck.drawCard(0);
       }
+      // sort and give card array
       player.setHand(cardsOut);
+      // sets the hand score of the player
+      findHandScore(player);
     }
     // TODO: include reshuffle standard deck here?
     theDeck.newPlayDeck();
   }
 
-  public Player findWinner(Player[] players) {
-    int highestScore = findHighestScore(players);
-    ArrayList<Player> playersWithHighest = new ArrayList<>();
+  public Player getWinner(Player[] players) {
+    // TODO: untie logic
     Player winner = null;
-    for (Player player : players) {
-      if (player.getHandScore() == highestScore) playersWithHighest.add(player);
+
+    if (players[0].getHandScore() > players[1].getHandScore()) winner = players[0];
+    if (players[0].getHandScore() < players[1].getHandScore()) winner = players[1];
+
+    if (players[0].getHandScore() == players[1].getHandScore()) {
+      if (players[0].getHandScore() == 0) {
+        winner = compareByHighHand(players, 4);
+      } else if (players[0].getHandScore() == 1) {
+        if (getPair(players[0].getHand()) > )
+
+      }
+
     }
 
-    if (playersWithHighest.size() == 1) {
-      // no ties
-      winner = playersWithHighest.get(0);
-    } else if (highestScore == 0){
-      // TODO: logic to untie the round
+    return winner;
+  }
 
-
-    } else if (highestScore == 1) {
-
-    } else if (highestScore == 2) {
-
+  public Player compareByHighHand(Player[] players, int index) {
+    Player winner = null;
+    if (index < 0) return null;
+    if (players[0].getHand()[index].getOrder() == players[1].getHand()[index].getOrder()) {
+      compareByHighHand(players, index - 1);
+    }
+    if (players[0].getHand()[index].getOrder() > players[1].getHand()[index].getOrder()) {
+      winner = players[0];
+    } else {
+      winner = players[1];
     }
 
     return winner;
@@ -96,6 +111,20 @@ public class Game {
       for (int j = 0; j < hand.length; j++) {
         if (i != j && hand[i].getOrder() == hand[j].getOrder()) {
           out = true;
+          break;
+        }
+      }
+    }
+
+    return out;
+  }
+
+  public Card[] getPairFirst(Card[] hand) {
+    Card[] out = null;
+    for (int i = 0; i < hand.length; i++) {
+      for (int j = 0; j < hand.length; j++) {
+        if (i != j && hand[i].getOrder() == hand[j].getOrder()) {
+          out = new Card[] {hand[i], hand[j]};
           break;
         }
       }

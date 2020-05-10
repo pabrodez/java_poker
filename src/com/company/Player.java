@@ -1,7 +1,12 @@
 package com.company;
 
 import java.util.ArrayList;
+import java.util.Comparator;
+import java.util.stream.Stream;
+
 import com.company.Card;
+
+// TODO: implement Comparable<Player>
 
 public class Player {
   private String name;
@@ -28,7 +33,7 @@ public class Player {
     return hand;
   }
   public void setHand(Card[] hand) {
-    this.hand = hand;
+    this.hand = Stream.of(hand).sorted(Comparator.comparingInt(Card::getOrder)).toArray(Card[]::new);
   }
 
   public String getBlind() {
@@ -48,8 +53,8 @@ public class Player {
   public int getWins() {
     return wins;
   }
-  public void setWins(int wins) {
-    this.wins = wins;
+  public void sumWin(int wins) {
+    this.wins += wins;
   }
 
   public String printHand() {
