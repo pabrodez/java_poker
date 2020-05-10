@@ -27,6 +27,59 @@ public class Game {
     theDeck.newPlayDeck();
   }
 
+  public Player findWinner(Player[] players) {
+    int highestScore = findHighestScore(players);
+    ArrayList<Player> playersWithHighest = new ArrayList<>();
+    Player winner = null;
+    for (Player player : players) {
+      if (player.getHandScore() == highestScore) playersWithHighest.add(player);
+    }
+
+    if (playersWithHighest.size() == 1) {
+      // no ties
+      winner = playersWithHighest.get(0);
+    } else if (highestScore == 0){
+      // TODO: logic to untie the round
+
+
+    } else if (highestScore == 1) {
+
+    } else if (highestScore == 2) {
+
+    }
+
+    return winner;
+  }
+
+  public int findHighestScore(Player[] players) {
+    int[] handsScores = new int[players.length];
+    for (int i = 0; i < players.length; i++) {
+      handsScores[i] = findHandScore(players[i]);
+    }
+    Arrays.sort(handsScores);
+
+    return handsScores[handsScores.length - 1];
+  }
+
+  public int findHandScore(Player player) {
+    int score = 0;
+
+    player.setHandScore(0);
+
+    if (hasPair(player.getHand())) score = 1;
+    if (hasTwoPair(player.getHand())) score = 2;
+    if (hasThree(player.getHand())) score = 3;
+    if (hasStraight(player.getHand())) score = 4;
+    if (hasFlush(player.getHand())) score = 5;
+    if (hasFullHouse(player.getHand())) score = 6;
+    if (hasQuads(player.getHand())) score = 7;
+    if (hasStraightFlush(player.getHand())) score = 8;
+
+    player.setHandScore(score);
+
+    return score;
+  }
+
   public Card[] getHighCard(Card[] hand) {
 
     Card[] highestCard = new Card[1];
@@ -127,15 +180,17 @@ public class Game {
     for (int i = 0; i < hand.length; i++) {
       int repetitions = 0;
 
-      for (int j = 0; j < hand.length; j++) {
-        if ((i != j) && (hand[i].getOrder() == hand[j].getOrder())) {
-          repetitions++;
+      if (nPairs < 2) {
+        for (int j = 0; j < hand.length; j++) {
+          if ((i != j) && (hand[i].getOrder() == hand[j].getOrder())) {
+            repetitions++;
+          }
         }
-      }
 
-      if (repetitions == 1 && (hand[i].getOrder() != lastPairOrder)) {
-        nPairs++;
-        lastPairOrder = hand[i].getOrder();
+        if (repetitions == 1 && (hand[i].getOrder() != lastPairOrder)) {
+          nPairs++;
+          lastPairOrder = hand[i].getOrder();
+        }
       }
     }
 

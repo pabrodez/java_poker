@@ -1,5 +1,6 @@
 package com.company;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Scanner;
 
 // TODO: implement Stream.reduce()
@@ -32,28 +33,18 @@ public class Main {
 //        }
 
 
-        // TODO: finish win and draw logic
-        playersArray[0] = new Player("aa", "bb", 44);
-        playersArray[1] = new Player("bb", "sb", 100);
+        playersArray[0] = new Player("first", "bb", 44);
+        playersArray[1] = new Player("second", "sb", 100);
 
         Game newGame = new Game(playersArray);
         newGame.giveCards();
         System.out.println(playersArray[0].printHand() + "\n" +
                 playersArray[1].printHand());
 
-        for (Player player : playersArray) {
-            Card[] hand = player.getHand();
-            player.setHandScore(0);
-            if (newGame.hasPair(hand)) player.setHandScore(1);
-            if (newGame.hasTwoPair(hand)) player.setHandScore(2);
-            if (newGame.hasThree(hand)) player.setHandScore(3);
-            if (newGame.hasStraight(hand)) player.setHandScore(4);
-            if (newGame.hasFlush(hand)) player.setHandScore(5);
-            if (newGame.hasFullHouse(hand)) player.setHandScore(6);
-            if (newGame.hasQuads(hand)) player.setHandScore(7);
-            if (newGame.hasStraightFlush(hand)) player.setHandScore(8);
-        }
-        // find max score
-        int maxHand = Arrays
+        System.out.println(newGame.findHandScore(playersArray[0]));
+        System.out.println(newGame.findHandScore(playersArray[1]));
+        System.out.println(newGame.findHighestScore(playersArray));
+        System.out.println(newGame.findWinner(playersArray));
+
     }
 }
