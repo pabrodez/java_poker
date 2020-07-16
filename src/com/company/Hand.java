@@ -103,32 +103,49 @@ public class Hand implements Comparable<Hand> {
   public int getHandScore() {
     int score = 0;
     if (hasRoyalFlush())    {
-      return score = 10;
+      score = 10;
     } else if (hasStraightFlush()) {
-      return 9;
+      score = 9;
     }else if (hasFour())          {
-      return 8;
+      score = 8;
     } else if (hasFullHouse())     {
-      return 7;
+      score = 7;
     } else if (hasFlush())         {
-      return 6;
+      score = 6;
     } else if (hasStraight())      {
-      return 5;
+      score = 5;
     } else if (hasThree())         {
-      return 4;
+      score = 4;
     } else if (hasTwoPair())       {
-      return 3;
+      score = 3;
     } else if (hasPair()) {
-      return 2;
+      score = 2;
     }
 
     return score;
 
   }
 
+
+
   @Override
   public int compareTo(Hand opponent) {
+    int thisScore = this.getHandScore();
+    int opponentScore = opponent.getHandScore();
+    int scoreDiff = thisScore - opponentScore;
+
+    if (scoreDiff == 0) {
+      if (thisScore == 0 && opponentScore == 0) {
+        scoreDiff = this.getHighCard().getOrder() - opponent.getHighCard().getOrder();
+      } else if (thisScore == 2 && opponentScore == 2) {
+        
+      }
+
+    }
+    return scoreDiff;
 
   }
+
+
 
 }

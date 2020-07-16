@@ -2,9 +2,6 @@ package com.company;
 
 import static org.junit.jupiter.api.Assertions.*;
 
-import org.junit.jupiter.api.BeforeEach;
-import org.testng.annotations.AfterTest;
-
 import java.util.ArrayList;
 
 public class HandTest {
@@ -131,6 +128,19 @@ public class HandTest {
     Hand hand = new Hand(cards);
 
     assertEquals(hand.getHighCard(), cards.get(4));
+  }
+
+  @org.junit.jupiter.api.Test
+  public void getHandScore() {
+    ArrayList<Card> cards = new ArrayList<>();
+    cards.add(new Card("2", "c", 13));
+    cards.add(new Card("3", "c", 11));
+    cards.add(new Card("4", "c", 12));
+    cards.add(new Card("5", "c", 10));
+    cards.add(new Card("6", "c", 9));
+    Hand hand = new Hand(cards);
+
+    assertEquals(hand.getHandScore(), 10);
   }
 
 
