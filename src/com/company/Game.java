@@ -42,7 +42,7 @@ public class Game {
       if (players[0].getHandScore() == 0) {
         winner = compareByHighHand(players, 4);
       } else if (players[0].getHandScore() == 1) {
-        if (getPair(players[0].getHand()) > )
+        // if (getPair(players[0].getHand()) > )
 
       }
 
