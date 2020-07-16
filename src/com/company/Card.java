@@ -1,6 +1,6 @@
 package com.company;
 
-public class Card {
+public class Card implements Comparable<Card>{
   private String value;
   private String suit;
   private int order;
@@ -33,6 +33,11 @@ public class Card {
   }
 
   public String toString() {
-    return value + suit;
+    return value + suit + order;
+  }
+
+  @Override
+  public int compareTo(Card y) {
+    return this.getOrder() - y.getOrder();
   }
 }
