@@ -20,6 +20,17 @@ public class Hand implements Comparable<Hand> {
   public ArrayList<Card> getCards() {
     return cards;
   }
+  public void setCards(Card card1, Card card2, Card card3, Card card4, Card card5) {
+    clearCards();
+    cards.add(card1);
+    cards.add(card2);
+    cards.add(card3);
+    cards.add(card4);
+    cards.add(card5);
+  }
+  public void clearCards() {
+    cards.clear();
+  }
 
   private boolean hasOcurrences(HashMap<String, Integer> hashMap, int occurrences) {
     return hashMap.containsValue(occurrences);
