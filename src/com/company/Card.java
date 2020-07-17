@@ -33,7 +33,7 @@ public class Card implements Comparable<Card>{
   }
 
   public String toString() {
-    return value + suit + order;
+    return value + suit;
   }
 
   @Override

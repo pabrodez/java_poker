@@ -3,6 +3,8 @@ package com.company;
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.lang.Math;
+import java.util.Collections;
+import java.util.Random;
 
 public class Deck {
   private static final int SIZE = 52;
@@ -53,7 +55,7 @@ public class Deck {
     }
   }
 
-  private final ArrayList<Card> STANDARD_DECK = new ArrayList<>();
+  private ArrayList<Card> playDeck = new ArrayList<>();
 
   // TODO: make content of STANDARD_DECK a class parameter (not instance)
 
@@ -115,58 +117,34 @@ public class Deck {
 //          new Card(ACE, CLUBS,13)
 //  ));
 
-  private ArrayList<Card> playDeck;
-
   public Deck() {
-
-    for (Rank rank: Rank.values()) {
-      for (Suit suit: Suit.values()) {
-        STANDARD_DECK.add(new Card(rank.value, suit.letter, rank.order));
-      }
-    }
-
-    this.playDeck = shuffleStandardDeck();
+    resetDeck();
+    shuffleDeck();
   }
 
   public ArrayList<Card> getPlayDeck() {
     return this.playDeck;
   }
 
-  public void newPlayDeck() {
-    this.playDeck = shuffleStandardDeck();
-  }
-
-  public Card drawCard(int ind) {
-    Card drawnCard = playDeck.get(ind);
-    playDeck.remove(ind);
+  public Card drawCard() {
+    Random random = new Random();
+    int randomIndex = random.nextInt(playDeck.size());
+    Card drawnCard = playDeck.get(randomIndex);
+    playDeck.remove(drawnCard);
     return drawnCard;
   }
 
-  public ArrayList<Card> shuffleStandardDeck() {
-    // TODO: use Collections.shuffle() instead
-    ArrayList<Card> newDeck = new ArrayList<>();
-    ArrayList<String> usedCards = new ArrayList<>();
-    for (int i = 0; SIZE > i; i++) {
-      boolean isUsed = true;
-      while (isUsed) {
-        int random = (int)(Math.random() * SIZE);
-        String pickedCard = STANDARD_DECK.get(random).toString();
-        if (!usedCards.contains(pickedCard)) {
-          newDeck.add(STANDARD_DECK.get(random));
-          usedCards.add(pickedCard);
-          isUsed = false;
-        }
+  public void resetDeck() {
+    playDeck.clear();
+    for (Rank rank: Rank.values()) {
+      for (Suit suit: Suit.values()) {
+        playDeck.add(new Card(rank.value, suit.letter, rank.order));
       }
     }
-    return newDeck;
   }
 
-  public String printStandardDeck() {
-    StringBuilder out = new StringBuilder();
-    for (Card card : STANDARD_DECK) {
-      out.append(card.toString());
-    }
-    return out.toString();
+  public void shuffleDeck() {
+    Collections.shuffle(playDeck);
   }
 
   public String toString() {

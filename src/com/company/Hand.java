@@ -10,10 +10,10 @@ import java.util.stream.Stream;
 public class Hand implements Comparable<Hand> {
 
   private final int SIZE = 5;
-  private ArrayList<Card> cards;
+  private ArrayList<Card> cards = new ArrayList<>();
 
-  Hand(ArrayList<Card> cards) {
-    this.cards = cards;
+  Hand(Card card1, Card card2, Card card3, Card card4, Card card5) {
+    Collections.addAll(cards, card1, card2, card3, card4, card5);
     Collections.sort(this.cards);
   }
 
@@ -161,7 +161,7 @@ public class Hand implements Comparable<Hand> {
   }
 
   public static int compareFlush(Hand hand1, Hand hand2) {
-    return Hand.compareStraight(hand1, hand2);
+    return Hand.compareHighCard(hand1, hand2);
   }
 
   public static int compareFullHouse(Hand hand1, Hand hand2) {
@@ -268,22 +268,46 @@ public class Hand implements Comparable<Hand> {
 
   @Override
   public int compareTo(Hand opponent) {
-    int thisScore = this.getHandScore();
-    int opponentScore = opponent.getHandScore();
-    int scoreDiff = thisScore - opponentScore;
-
+    int scoreDiff = this.getHandScore() - opponent.getHandScore();
     if (scoreDiff == 0) {
-      if (thisScore == 0 && opponentScore == 0) {
-        scoreDiff = this.getHighCard().getOrder() - opponent.getHighCard().getOrder();
-      } else if (thisScore == 2 && opponentScore == 2) {
-        
+      // TODO: optimize switch
+      switch (this.getHandScore()) {
+        case 10:
+          scoreDiff = 0;
+          break;
+        case 9:
+        case 5:
+          scoreDiff = Hand.compareStraightFlush(this, opponent);
+          break;
+        case 8:
+          scoreDiff = Hand.compareFour(this, opponent);
+          break;
+        case 7:
+        case 4:
+          scoreDiff = Hand.compareThree(this, opponent);
+          break;
+        case 6:
+          scoreDiff = Hand.compareHighCard(this, opponent);
+          break;
+        case 3:
+          scoreDiff = Hand.compareTwoPair(this, opponent);
+          break;
+        case 2:
+          scoreDiff = Hand.comparePair(this, opponent);
+          break;
+        case 0:
+          scoreDiff = Hand.compareHighCard(this, opponent);
+          break;
       }
-
     }
-    return scoreDiff;
+
+    return (int) Math.signum(scoreDiff);
 
   }
 
-
+  @Override
+  public String toString() {
+    return this.getCards().toString();
+  }
 
 }
