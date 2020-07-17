@@ -143,5 +143,130 @@ public class HandTest {
     assertEquals(hand.getHandScore(), 10);
   }
 
+  @org.junit.jupiter.api.Test
+  public void compareHighCard() {
+    ArrayList<Card> cards1 = new ArrayList<>();
+    cards1.add(new Card("2", "c", 13));
+    cards1.add(new Card("3", "c", 11));
+    cards1.add(new Card("4", "c", 12));
+    cards1.add(new Card("5", "c", 10));
+    cards1.add(new Card("6", "c", 7));
+    Hand hand1 = new Hand(cards1);
+
+    ArrayList<Card> cards2 = new ArrayList<>();
+    cards2.add(new Card("2", "c", 13));
+    cards2.add(new Card("3", "h", 11));
+    cards2.add(new Card("4", "c", 12));
+    cards2.add(new Card("5", "p", 10));
+    cards2.add(new Card("6", "c", 8));
+    Hand hand2 = new Hand(cards2);
+
+    assertEquals(Hand.compareHighCard(hand1, hand2), -1);
+  }
+
+  @org.junit.jupiter.api.Test
+  public void compareStraight() {
+    ArrayList<Card> cards1 = new ArrayList<>();
+    cards1.add(new Card("2", "c", 8));
+    cards1.add(new Card("3", "c", 4));
+    cards1.add(new Card("4", "c", 5));
+    cards1.add(new Card("5", "c", 6));
+    cards1.add(new Card("6", "c", 7));
+    Hand hand1 = new Hand(cards1);
+
+    ArrayList<Card> cards2 = new ArrayList<>();
+    cards2.add(new Card("2", "c", 7));
+    cards2.add(new Card("3", "h", 5));
+    cards2.add(new Card("4", "c", 6));
+    cards2.add(new Card("5", "p", 4));
+    cards2.add(new Card("6", "c", 8));
+    Hand hand2 = new Hand(cards2);
+
+    assertEquals(0, Hand.compareStraight(hand1, hand2));
+  }
+
+  @org.junit.jupiter.api.Test
+  public void compareFullHouse() {
+    ArrayList<Card> cards1 = new ArrayList<>();
+    cards1.add(new Card("2", "c", 4));
+    cards1.add(new Card("3", "c", 13));
+    cards1.add(new Card("4", "c", 4));
+    cards1.add(new Card("5", "c", 4));
+    cards1.add(new Card("6", "c", 13));
+    Hand hand1 = new Hand(cards1);
+
+    ArrayList<Card> cards2 = new ArrayList<>();
+    cards2.add(new Card("2", "c", 12));
+    cards2.add(new Card("3", "h", 13));
+    cards2.add(new Card("4", "c", 12));
+    cards2.add(new Card("5", "p", 13));
+    cards2.add(new Card("6", "c", 12));
+    Hand hand2 = new Hand(cards2);
+
+    assertEquals(-1, Hand.compareFullHouse(hand1, hand2));
+  }
+
+  @org.junit.jupiter.api.Test
+  public void compareFour() {
+    ArrayList<Card> cards1 = new ArrayList<>();
+    cards1.add(new Card("2", "c", 13));
+    cards1.add(new Card("3", "c", 13));
+    cards1.add(new Card("4", "c", 4));
+    cards1.add(new Card("5", "c", 13));
+    cards1.add(new Card("6", "c", 13));
+    Hand hand1 = new Hand(cards1);
+
+    ArrayList<Card> cards2 = new ArrayList<>();
+    cards2.add(new Card("2", "c", 11));
+    cards2.add(new Card("3", "h", 4));
+    cards2.add(new Card("4", "c", 11));
+    cards2.add(new Card("5", "p", 11));
+    cards2.add(new Card("6", "c", 11));
+    Hand hand2 = new Hand(cards2);
+
+    assertEquals(1, Hand.compareFour(hand1, hand2));
+  }
+
+  @org.junit.jupiter.api.Test
+  public void comparePair() {
+    ArrayList<Card> cards1 = new ArrayList<>();
+    cards1.add(new Card("2", "c", 5));
+    cards1.add(new Card("3", "c", 5));
+    cards1.add(new Card("4", "c", 7));
+    cards1.add(new Card("5", "c", 6));
+    cards1.add(new Card("6", "c", 2));
+    Hand hand1 = new Hand(cards1);
+
+    ArrayList<Card> cards2 = new ArrayList<>();
+    cards2.add(new Card("2", "c", 5));
+    cards2.add(new Card("3", "h", 5));
+    cards2.add(new Card("4", "c", 6));
+    cards2.add(new Card("5", "p", 4));
+    cards2.add(new Card("6", "c", 8));
+    Hand hand2 = new Hand(cards2);
+
+    assertEquals(-1, Hand.comparePair(hand1, hand2));
+  }
+
+  @org.junit.jupiter.api.Test
+  public void compareTwoPair() {
+    ArrayList<Card> cards1 = new ArrayList<>();
+    cards1.add(new Card("2", "c", 13));
+    cards1.add(new Card("3", "c", 7));
+    cards1.add(new Card("4", "c", 13));
+    cards1.add(new Card("5", "c", 7));
+    cards1.add(new Card("6", "c", 9));
+    Hand hand1 = new Hand(cards1);
+
+    ArrayList<Card> cards2 = new ArrayList<>();
+    cards2.add(new Card("2", "c", 13));
+    cards2.add(new Card("3", "h", 13));
+    cards2.add(new Card("4", "c", 8));
+    cards2.add(new Card("5", "p", 8));
+    cards2.add(new Card("6", "c", 4));
+    Hand hand2 = new Hand(cards2);
+
+    assertEquals(-1, Hand.compareTwoPair(hand1, hand2));
+  }
 
 }
