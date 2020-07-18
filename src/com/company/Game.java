@@ -12,9 +12,11 @@ public class Game {
 
   private ArrayList<Hand> hands;
   private Deck playDeck;
+  private Scanner input;
 
-  Game(Deck deck) {
+  Game(Deck deck, Scanner input) {
     this.playDeck = deck;
+    this.input = input;
     this.hands = new ArrayList<>(2);
     hands.add(new Hand(this.playDeck.drawCard(), this.playDeck.drawCard(), this.playDeck.drawCard(),
             this.playDeck.drawCard(), this.playDeck.drawCard()));
@@ -52,10 +54,9 @@ public class Game {
   }
 
   public void changeCards() {
-    Scanner scanner = new Scanner(System.in);
     for (int i=0; i < hands.size(); i++) {
       System.out.printf("Hand %d, enter indexes of cards to change (eg: 245):", i);
-      String input = scanner.nextLine();
+      String input = this.input.nextLine();
       // convert to array of integers
       int[] indexes = Arrays.stream(input.split("")).mapToInt(Integer::parseInt).toArray();
       // replace the cards at the provided indexes
@@ -64,10 +65,13 @@ public class Game {
       }
       Collections.sort(hands.get(i).getCards());
     }
-    scanner.close();
   }
 
+  // TODO: add printHands()
+
   public void playRound() {
+
+
     System.out.println(playDeck.toString());
     System.out.println(
             "Hand 1: " + hands.get(0).toString() + "\n" +
@@ -76,11 +80,20 @@ public class Game {
     System.out.println(
             hands.get(0).compareTo(hands.get(1))
     );
-    System.out.println(findWinningHand().toString());
+    System.out.println("Winning hand is: " + findWinningHand().toString());
 
     changeCards();
 
-    System.out.println(findWinningHand().toString());
+    System.out.println(
+            "Hand 1: " + hands.get(0).toString() + "\n" +
+            "Hand 2: " + hands.get(1).toString()
+    );
+
+    System.out.println(
+            hands.get(0).compareTo(hands.get(1))
+    );
+
+    System.out.println("Winning hand is: " + findWinningHand().toString());
 
     playDeck.resetDeck();
     playDeck.shuffleDeck();

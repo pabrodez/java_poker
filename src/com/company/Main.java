@@ -7,11 +7,19 @@ import java.util.Scanner;
 public class Main {
 
     public static void main(String[] args) {
+      Scanner input = new Scanner(System.in);
       Deck deck = new Deck();
-      Game game = new Game(deck);
+      Game game = new Game(deck, input);
 
-      game.playRound();
+      while (true) {
+        System.out.println("Enter play to play round | exit to quit game");
+        // TODO: exceptions maybe
+        String option = input.nextLine();
+        if (option.equals("exit")) break;
+        game.playRound();
+      }
 
+      input.close();
     }
 
 }

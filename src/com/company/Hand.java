@@ -276,6 +276,7 @@ public class Hand implements Comparable<Hand> {
     return orders;
   }
 
+  // TODO: method to return hand category as String
 
   @Override
   public int compareTo(Hand opponent) {
