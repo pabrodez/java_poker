@@ -23,11 +23,11 @@ public class HandTest {
   @Test
   public void hasThree() {
     Hand hand = new Hand(
-            new Card("a", "s", 13),
-            new Card("a", "s", 13),
-            new Card("a", "s", 4),
-            new Card("a", "s", 13),
-            new Card("a", "s", 6)
+            new Card("a","s", 13),
+            new Card("a","s", 13),
+            new Card("a","s", 4),
+            new Card("a","s", 13),
+            new Card("a","s", 6)
     );
     assertTrue(hand.hasThree());
   }

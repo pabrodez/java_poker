@@ -11,29 +11,17 @@ public class Card implements Comparable<Card>{
     this.order = order;
   }
 
-  public String getValue() {
-    return value;
-  }
-  public void setValue(String value) {
-    this.value = value;
-  }
-
   public String getSuit() {
     return suit;
-  }
-  public void setSuit(String suit) {
-    this.suit = suit;
   }
 
   public int getOrder() {
     return order;
   }
-  public void setOrder(int order) {
-    this.order = order;
-  }
 
+  @Override
   public String toString() {
-    return value + suit;
+    return this.value + this.suit;
   }
 
   @Override

@@ -9,7 +9,6 @@ import java.util.stream.Stream;
 
 public class Hand implements Comparable<Hand> {
 
-  private final int SIZE = 5;
   private ArrayList<Card> cards = new ArrayList<>();
 
   Hand(Card card1, Card card2, Card card3, Card card4, Card card5) {
@@ -28,6 +27,11 @@ public class Hand implements Comparable<Hand> {
     cards.add(card4);
     cards.add(card5);
   }
+
+  public void replaceCardAtIndex(int index, Card newCard) {
+    this.cards.set(index, newCard);
+  }
+
   public void clearCards() {
     cards.clear();
   }
@@ -277,6 +281,19 @@ public class Hand implements Comparable<Hand> {
   }
 
   // TODO: method to return hand category as String
+
+  public String getCategoryString() {
+
+    String category;
+
+    switch (getHandScore()) {
+      case 10:
+        category = "Royal flush";
+        break;
+      case 9:
+        category = "Straight flush"
+    }
+  }
 
   @Override
   public int compareTo(Hand opponent) {

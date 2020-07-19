@@ -40,11 +40,11 @@ public class Game {
   public Hand findWinningHand() {
     // dummy always-losing hand to use as initial element in reduce
     Hand identity = new Hand(
-            new Card("a", "c", -10),
-            new Card("a", "h", -20),
-            new Card("a", "s", -30),
-            new Card("a", "h", -40),
-            new Card("a", "s", -50)
+            new Card("a", "s",-10),
+            new Card("a", "d",-20),
+            new Card("a", "s",-30),
+            new Card("a", "c",-40),
+            new Card("a", "s",-50)
     );
 
     Hand winningHand = hands.stream()
@@ -61,38 +61,32 @@ public class Game {
       int[] indexes = Arrays.stream(input.split("")).mapToInt(Integer::parseInt).toArray();
       // replace the cards at the provided indexes
       for (int ind : indexes) {
-        hands.get(i).getCards().set(ind - 1, playDeck.drawCard());
+        hands.get(i).replaceCardAtIndex(ind - 1, playDeck.drawCard());
       }
       Collections.sort(hands.get(i).getCards());
     }
   }
 
-  // TODO: add printHands()
+  public void printHands() {
+    for (Hand hand : hands) {
+      System.out.println(hand.toString());
+    }
+  }
 
   public void playRound() {
 
 
     System.out.println(playDeck.toString());
-    System.out.println(
-            "Hand 1: " + hands.get(0).toString() + "\n" +
-            "Hand 2: " + hands.get(1).toString()
-    );
+    printHands();
     System.out.println(
             hands.get(0).compareTo(hands.get(1))
     );
     System.out.println("Winning hand is: " + findWinningHand().toString());
-
     changeCards();
-
-    System.out.println(
-            "Hand 1: " + hands.get(0).toString() + "\n" +
-            "Hand 2: " + hands.get(1).toString()
-    );
-
+    printHands();
     System.out.println(
             hands.get(0).compareTo(hands.get(1))
     );
-
     System.out.println("Winning hand is: " + findWinningHand().toString());
 
     playDeck.resetDeck();
