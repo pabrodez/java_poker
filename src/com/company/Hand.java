@@ -280,53 +280,36 @@ public class Hand implements Comparable<Hand> {
     return orders;
   }
 
-  // TODO: method to return hand category as String
-
   public String getCategoryString() {
 
-    String category;
+    return switch (getHandScore()) {
+      case 10 -> "Royal flush";
+      case 9 -> "Straight flush";
+      case 8 -> "Quads";
+      case 7 -> "Full house";
+      case 6 -> "Flush";
+      case 5 -> "Straight";
+      case 4 -> "Three";
+      case 3 -> "Two pairs";
+      case 2 -> "Pair";
+      case 0 -> "High card";
+      default -> "";
+    };
 
-    switch (getHandScore()) {
-      case 10:
-        category = "Royal flush";
-        break;
-      case 9:
-        category = "Straight flush"
-    }
   }
 
   @Override
   public int compareTo(Hand opponent) {
     int scoreDiff = this.getHandScore() - opponent.getHandScore();
     if (scoreDiff == 0) {
-      // TODO: optimize switch
       switch (this.getHandScore()) {
-        case 10:
-          scoreDiff = 0;
-          break;
-        case 9:
-        case 5:
-          scoreDiff = Hand.compareStraightFlush(this, opponent);
-          break;
-        case 8:
-          scoreDiff = Hand.compareFour(this, opponent);
-          break;
-        case 7:
-        case 4:
-          scoreDiff = Hand.compareThree(this, opponent);
-          break;
-        case 6:
-          scoreDiff = Hand.compareHighCard(this, opponent);
-          break;
-        case 3:
-          scoreDiff = Hand.compareTwoPair(this, opponent);
-          break;
-        case 2:
-          scoreDiff = Hand.comparePair(this, opponent);
-          break;
-        case 0:
-          scoreDiff = Hand.compareHighCard(this, opponent);
-          break;
+        case 10 ->   scoreDiff = 0;
+        case 9, 5 -> scoreDiff = Hand.compareStraightFlush(this, opponent);
+        case 8 ->    scoreDiff = Hand.compareFour(this, opponent);
+        case 7, 4 -> scoreDiff = Hand.compareThree(this, opponent);
+        case 6, 0 -> scoreDiff = Hand.compareHighCard(this, opponent);
+        case 3 ->    scoreDiff = Hand.compareTwoPair(this, opponent);
+        case 2 ->    scoreDiff = Hand.comparePair(this, opponent);
       }
     }
 

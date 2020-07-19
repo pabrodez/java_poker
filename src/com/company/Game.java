@@ -55,7 +55,7 @@ public class Game {
 
   public void changeCards() {
     for (int i=0; i < hands.size(); i++) {
-      System.out.printf("Hand %d, enter indexes of cards to change (eg: 245):", i);
+      System.out.printf("Hand %d, enter indexes of cards to change (eg: 245):", i + 1);
       String input = this.input.nextLine();
       // convert to array of integers
       int[] indexes = Arrays.stream(input.split("")).mapToInt(Integer::parseInt).toArray();
@@ -74,21 +74,11 @@ public class Game {
   }
 
   public void playRound() {
-
-
-    System.out.println(playDeck.toString());
     printHands();
-    System.out.println(
-            hands.get(0).compareTo(hands.get(1))
-    );
-    System.out.println("Winning hand is: " + findWinningHand().toString());
     changeCards();
     printHands();
-    System.out.println(
-            hands.get(0).compareTo(hands.get(1))
-    );
-    System.out.println("Winning hand is: " + findWinningHand().toString());
-
+    Hand winningHand = findWinningHand();
+    System.out.println("Winning hand is: " + winningHand.toString() + " with " + winningHand.getCategoryString());
     playDeck.resetDeck();
     playDeck.shuffleDeck();
   }

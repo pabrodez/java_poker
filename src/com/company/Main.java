@@ -12,7 +12,7 @@ public class Main {
       Game game = new Game(deck, input);
 
       while (true) {
-        System.out.println("Enter play to play round | exit to quit game");
+        System.out.println("Press Enter to play round | exit to quit game");
         // TODO: exceptions maybe
         String option = input.nextLine();
         if (option.equals("exit")) break;
