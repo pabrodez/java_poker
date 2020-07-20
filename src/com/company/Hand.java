@@ -11,21 +11,20 @@ public class Hand implements Comparable<Hand> {
 
   private ArrayList<Card> cards = new ArrayList<>();
 
-  Hand(Card card1, Card card2, Card card3, Card card4, Card card5) {
-    Collections.addAll(cards, card1, card2, card3, card4, card5);
-    Collections.sort(this.cards);
+  Hand() {
+
+  }
+
+  Hand(Card... newCards) {
+    setCards(newCards);
   }
 
   public ArrayList<Card> getCards() {
     return cards;
   }
-  public void setCards(Card card1, Card card2, Card card3, Card card4, Card card5) {
-    clearCards();
-    cards.add(card1);
-    cards.add(card2);
-    cards.add(card3);
-    cards.add(card4);
-    cards.add(card5);
+  public void setCards(Card... cards) {
+    Collections.addAll(this.cards, cards);
+    Collections.sort(this.cards);
   }
 
   public void replaceCardAtIndex(int index, Card newCard) {

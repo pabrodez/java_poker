@@ -18,10 +18,9 @@ public class Game {
     this.playDeck = deck;
     this.input = input;
     this.hands = new ArrayList<>(2);
-    hands.add(new Hand(this.playDeck.drawCard(), this.playDeck.drawCard(), this.playDeck.drawCard(),
-            this.playDeck.drawCard(), this.playDeck.drawCard()));
-    hands.add(new Hand(this.playDeck.drawCard(), this.playDeck.drawCard(), this.playDeck.drawCard(),
-            this.playDeck.drawCard(), this.playDeck.drawCard()));
+    // initially empty hands
+    hands.add(new Hand());
+    hands.add(new Hand());
   }
 
   public void clearHands() {
@@ -39,7 +38,8 @@ public class Game {
 
   public Hand findWinningHand() {
     // dummy always-losing hand to use as initial element in reduce
-    Hand identity = new Hand(
+    Hand identity = new Hand();
+    identity.setCards(
             new Card("a", "s",-10),
             new Card("a", "d",-20),
             new Card("a", "s",-30),
@@ -74,11 +74,13 @@ public class Game {
   }
 
   public void playRound() {
+    giveCards();
     printHands();
     changeCards();
     printHands();
     Hand winningHand = findWinningHand();
     System.out.println("Winning hand is: " + winningHand.toString() + " with " + winningHand.getCategoryString());
+    clearHands();
     playDeck.resetDeck();
     playDeck.shuffleDeck();
   }
